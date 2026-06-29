@@ -1,1 +1,1 @@
-/Users/leon/stone/extensions/gaming-extension/target/wasm32-unknown-unknown/release/gaming_extension.wasm: /Users/leon/stone/extensions/gaming-extension/src/lib.rs
+/private/tmp/gaming-extension/target/wasm32-unknown-unknown/release/gaming_extension.wasm: /private/tmp/gaming-extension/src/lib.rs

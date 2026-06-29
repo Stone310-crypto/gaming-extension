@@ -1,8 +1,8 @@
 [package]
 name = "gaming-extension"
-version = "1.0.0"
+version = "1.0.2"
 edition = "2021"
-description = "Gaming Extension for Stone Dashboard — Game Registration, Item Trading, Marketplace"
+description = "Gaming Extension v1.0.2 - Company & Game Registration — Game Registration, Item Trading, Marketplace"
 
 [lib]
 crate-type = ["cdylib"]
