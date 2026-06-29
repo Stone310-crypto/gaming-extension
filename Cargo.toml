@@ -1,6 +1,6 @@
 [package]
 name = "gaming-extension"
-version = "1.0.2"
+version = "1.0.5"
 edition = "2021"
 description = "Gaming Extension v1.0.2 - Company & Game Registration — Game Registration, Item Trading, Marketplace"
 

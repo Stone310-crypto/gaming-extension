@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaming Extension</title>
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --panel: #1a1a1a;
+    --border: #2a2a2a;
+    --text: #e0e0e0;
+    --text-secondary: #888;
+    --accent: #d4a853;
+    --green: #22c55e;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --input-bg: #1e1e1e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg); color: var(--text); padding: 20px;
+    line-height: 1.5;
+  }
+  h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  h2 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; display: flex; align-items: center; gap: 8px; }
+  .subtitle { color: var(--text-secondary); font-size: 12px; margin-bottom: 20px; }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px; margin-bottom: 8px;
+  }
+  .card-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+  }
+  .card-title { font-weight: 600; font-size: 14px; }
+  .card-sub { color: var(--text-secondary); font-size: 11px; }
+
+  .tabs { display: flex; gap: 4px; margin-bottom: 16px; }
+  .tab {
+    padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border);
+    background: transparent; color: var(--text-secondary); cursor: pointer;
+    font-size: 12px; font-weight: 500;
+  }
+  .tab.active { background: var(--accent); color: #000; border-color: var(--accent); }
+
+  .form-group { margin-bottom: 12px; }
+  .form-group label {
+    display: block; font-size: 11px; font-weight: 500;
+    color: var(--text-secondary); margin-bottom: 4px;
+  }
+  .form-group input, .form-group select {
+    width: 100%; padding: 8px 10px; border-radius: 6px;
+    background: var(--input-bg); border: 1px solid var(--border);
+    color: var(--text); font-size: 13px; outline: none;
+  }
+  .form-group input:focus { border-color: var(--accent); }
+
+  .btn {
+    padding: 8px 16px; border-radius: 6px; border: none;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-primary { background: var(--accent); color: #000; }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-secondary { background: var(--border); color: var(--text); }
+  .btn-danger { background: rgba(239,68,68,0.12); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600;
+  }
+  .badge-green { background: rgba(34,197,94,0.12); color: var(--green); }
+  .badge-yellow { background: rgba(212,168,83,0.12); color: var(--accent); }
+  .badge-red { background: rgba(239,68,68,0.12); color: var(--red); }
+
+  .error-box {
+    background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 8px; padding: 10px; font-size: 12px; color: var(--red); margin-bottom: 12px;
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .loading { text-align: center; color: var(--text-secondary); padding: 40px; }
+</style>
+</head>
+<body>
+
+<h1>🎮 Gaming-Modul</h1>
+<p class="subtitle">Firmen & Spiele auf der StoneChain registrieren</p>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('games')">🎮 Spiele</button>
+  <button class="tab" onclick="switchTab('companies')">🏢 Firmen</button>
+  <button class="tab" onclick="switchTab('register-game')">➕ Spiel registrieren</button>
+  <button class="tab" onclick="switchTab('register-company')">🏗️ Firma registrieren</button>
+</div>
+
+<div id="error" class="error-box" style="display:none"></div>
+
+<!-- Spiele-Liste -->
+<div id="tab-games">
+  <h2>📋 Registrierte Spiele</h2>
+  <div id="games-list" class="loading">Lade Spiele…</div>
+</div>
+
+<!-- Firmen-Liste -->
+<div id="tab-companies" style="display:none">
+  <h2>🏢 Registrierte Firmen</h2>
+  <div id="companies-list" class="loading">Lade Firmen…</div>
+</div>
+
+<!-- Spiel registrieren -->
+<div id="tab-register-game" style="display:none">
+  <h2>➕ Neues Spiel registrieren</h2>
+  <div class="card">
+    <div class="form-group">
+      <label>Game-ID (3-64 Zeichen: a-z, 0-9, _, -)</label>
+      <input type="text" id="game-id" placeholder="mein-spiel" maxlength="64">
+    </div>
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" id="game-name" placeholder="Mein Spiel" maxlength="96">
+    </div>
+    <div class="form-group">
+      <label>Version (SemVer)</label>
+      <input type="text" id="game-version" placeholder="1.0.0">
+    </div>
+    <div class="form-group">
+      <label>Company-Wallet</label>
+      <input type="text" id="game-company" placeholder="64-stellige Wallet-Adresse" maxlength="64">
+    </div>
+    <div class="form-group">
+      <label>Genres (kommagetrennt)</label>
+      <input type="text" id="game-genres" placeholder="RPG, Adventure">
+    </div>
+    <button class="btn btn-primary" onclick="registerGame()">📝 Spiel registrieren</button>
+  </div>
+</div>
+
+<!-- Firma registrieren -->
+<div id="tab-register-company" style="display:none">
+  <h2>🏗️ Neue Firma registrieren</h2>
+  <div class="card">
+    <div class="form-group">
+      <label>Firmenname (2-64 Zeichen)</label>
+      <input type="text" id="company-name" placeholder="Mein Studio" maxlength="64">
+    </div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Land (ISO-Code, z.B. DE)</label>
+        <input type="text" id="company-country" placeholder="DE" maxlength="2">
+      </div>
+      <div class="form-group">
+        <label>Website</label>
+        <input type="text" id="company-website" placeholder="https://...">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Owner-Wallet</label>
+      <input type="text" id="company-wallet" placeholder="64-stellige Wallet-Adresse" maxlength="64">
+    </div>
+    <button class="btn btn-primary" onclick="registerCompany()">🏗️ Firma registrieren</button>
+  </div>
+</div>
+
+<script>
+// ─── Tab-Switching ──────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('[id^="tab-"]').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).style.display = 'block';
+  event.target.classList.add('active');
+  if (name === 'games') loadGames();
+  if (name === 'companies') loadCompanies();
+}
+
+function showError(msg) {
+  const el = document.getElementById('error');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+function hideError() {
+  document.getElementById('error').style.display = 'none';
+}
+
+// ─── Tauri Bridge (via postMessage) ──────────────────────────────────
+let _invokeId = 0;
+const _pending = {};
+window.addEventListener('message', (e) => {
+  if (e.data?.id && _pending[e.data.id]) {
+    if (e.data.ok) _pending[e.data.id].resolve(e.data.result);
+    else _pending[e.data.id].reject(new Error(e.data.error));
+    delete _pending[e.data.id];
+  }
+});
+
+function invoke(cmd, args) {
+  return new Promise((resolve, reject) => {
+    const id = ++_invokeId;
+    _pending[id] = { resolve, reject };
+    window.parent.postMessage({ type: 'tauri-invoke', id, cmd, args }, '*');
+  });
+}
+
+// ─── Spiele laden ────────────────────────────────────────────────────
+async function loadGames() {
+  const container = document.getElementById('games-list');
+  try {
+    const games = await invoke('list_games');
+    if (games.length === 0) {
+      container.innerHTML = '<div class="card"><p style="color:var(--text-secondary);font-size:13px">Keine Spiele registriert.</p></div>';
+      return;
+    }
+    container.innerHTML = games.map(g => `
+      <div class="card">
+        <div class="card-header">
+          <span style="font-size:18px">🎮</span>
+          <div>
+            <div class="card-title">${esc(g.name)}</div>
+            <div class="card-sub">${esc(g.game_id)} · v${esc(g.version)}</div>
+          </div>
+          <div style="margin-left:auto;display:flex;gap:4px">
+            <span class="badge ${g.verified ? 'badge-green' : 'badge-yellow'}">${g.verified ? '✓ Verified' : 'Pending'}</span>
+            <span class="badge ${g.status === 'Active' ? 'badge-green' : 'badge-red'}">${esc(g.status)}</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;font-size:11px;color:var(--text-secondary)">
+          <span>🏢 ${esc(g.owner_company || '—').substring(0,12)}…</span>
+          <span>🏷️ ${(g.genres || []).join(', ') || '—'}</span>
+        </div>
+      </div>
+    `).join('');
+  } catch(e) {
+    container.innerHTML = '<p style="color:var(--red)">Fehler: ' + esc(String(e)) + '</p>';
+  }
+}
+
+// ─── Firmen laden ────────────────────────────────────────────────────
+async function loadCompanies() {
+  const container = document.getElementById('companies-list');
+  try {
+    const companies = await invoke('list_companies');
+    if (companies.length === 0) {
+      container.innerHTML = '<div class="card"><p style="color:var(--text-secondary);font-size:13px">Keine Firmen registriert.</p></div>';
+      return;
+    }
+    container.innerHTML = companies.map(c => `
+      <div class="card">
+        <div class="card-header">
+          <span style="font-size:18px">🏢</span>
+          <div>
+            <div class="card-title">${esc(c.name)}</div>
+            <div class="card-sub">${esc(c.country)} · ${esc(c.website)}</div>
+          </div>
+          <div style="margin-left:auto;display:flex;gap:4px">
+            <span class="badge ${c.verified ? 'badge-green' : 'badge-yellow'}">${c.verified ? '✓ Verified' : 'Pending'}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  } catch(e) {
+    container.innerHTML = '<p style="color:var(--red)">Fehler: ' + esc(String(e)) + '</p>';
+  }
+}
+
+// ─── Spiel registrieren ──────────────────────────────────────────────
+async function registerGame() {
+  hideError();
+  const req = {
+    game_id: document.getElementById('game-id').value.trim(),
+    owner_company: document.getElementById('game-company').value.trim(),
+    name: document.getElementById('game-name').value.trim(),
+    version: document.getElementById('game-version').value.trim() || '1.0.0',
+    genres: document.getElementById('game-genres').value.split(',').map(s => s.trim()).filter(Boolean),
+  };
+  if (!req.game_id || !req.name || !req.owner_company) {
+    showError('Game-ID, Name und Company-Wallet sind Pflichtfelder.');
+    return;
+  }
+  try {
+    await invoke('register_game', { req });
+    alert('Spiel registriert! Es erscheint im nächsten Block auf der Chain.');
+    switchTab('games');
+  } catch(e) {
+    showError('Registrierung fehlgeschlagen: ' + String(e));
+  }
+}
+
+// ─── Firma registrieren ──────────────────────────────────────────────
+async function registerCompany() {
+  hideError();
+  const req = {
+    owner_wallet: document.getElementById('company-wallet').value.trim(),
+    name: document.getElementById('company-name').value.trim(),
+    country: document.getElementById('company-country').value.trim().toUpperCase(),
+    website: document.getElementById('company-website').value.trim(),
+  };
+  if (!req.owner_wallet || !req.name || !req.country) {
+    showError('Wallet, Name und Land sind Pflichtfelder.');
+    return;
+  }
+  if (req.owner_wallet.length !== 64) {
+    showError('Wallet muss 64 Zeichen lang sein (Hex).');
+    return;
+  }
+  try {
+    await invoke('create_company', { req });
+    alert('Firma registriert! Sie erscheint im nächsten Block auf der Chain.');
+    switchTab('companies');
+  } catch(e) {
+    showError('Registrierung fehlgeschlagen: ' + String(e));
+  }
+}
+
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// Initial: Spiele laden
+loadGames();
+</script>
+</body>
+</html>
