@@ -1,0 +1,14 @@
+/Users/leon/stone/extensions/gaming-extension/target/wasm32-unknown-unknown/release/deps/serde-a85a875b5c8f0f95.d: /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/leon/stone/extensions/gaming-extension/target/wasm32-unknown-unknown/release/build/serde-88aa63f777609b6b/out/private.rs
+
+/Users/leon/stone/extensions/gaming-extension/target/wasm32-unknown-unknown/release/deps/libserde-a85a875b5c8f0f95.rlib: /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/leon/stone/extensions/gaming-extension/target/wasm32-unknown-unknown/release/build/serde-88aa63f777609b6b/out/private.rs
+
+/Users/leon/stone/extensions/gaming-extension/target/wasm32-unknown-unknown/release/deps/libserde-a85a875b5c8f0f95.rmeta: /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/leon/stone/extensions/gaming-extension/target/wasm32-unknown-unknown/release/build/serde-88aa63f777609b6b/out/private.rs
+
+/Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs:
+/Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs:
+/Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs:
+/Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs:
+/Users/leon/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs:
+/Users/leon/stone/extensions/gaming-extension/target/wasm32-unknown-unknown/release/build/serde-88aa63f777609b6b/out/private.rs:
+
+# env-dep:OUT_DIR=/Users/leon/stone/extensions/gaming-extension/target/wasm32-unknown-unknown/release/build/serde-88aa63f777609b6b/out
